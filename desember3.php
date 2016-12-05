@@ -28,3 +28,35 @@ while(!feof($data)) {
 fclose($data);
 
 echo $numTriangles;
+echo "\n";
+echo "Part 2:";
+echo "\n";
+// Part 2
+
+$numTriangles = 0;
+
+$data = fopen("desember3_data.txt", "r") or die ("Unable to read file");
+
+$three = [array(), array(), array()];
+
+while(!feof($data)) {
+	$line = fgets($data);
+	$lineArray = preg_split('/\s+/', trim($line));
+
+	if (count($three[0]) === 3) {
+		foreach($three as $triangle) {
+			if (isTriangle($triangle)) {
+				$numTriangles++;
+			}
+		}
+		$three = [array(), array(), array()];
+	}
+
+	$three[0][] = $lineArray[0];
+	$three[1][] = $lineArray[1];
+	$three[2][] = $lineArray[2];
+}
+
+fclose($data);
+
+echo $numTriangles;
